@@ -1,11 +1,10 @@
 import pandas as pd
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score, roc_curve, auc, precision_recall_curve
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 def load_and_prepare_data(df):
     X = df.drop(columns=["diagnosed_diabetes"])
@@ -61,3 +60,40 @@ def plot_roc_curve(y_true, y_probs, model_name='Model'):
     plt.title('ROC Curves for Different Models')
     plt.legend()
     plt.show()
+
+def optimize_threshold(y_true, y_probs):
+    p_curve, r_curve, t_curve = precision_recall_curve(y_true, y_probs)
+
+    plt.plot(t_curve, p_curve[:-1], label='Precision')
+    plt.plot(t_curve, r_curve[:-1], label='Recall')
+    plt.xlabel('Prediction Threshold')
+    plt.ylabel('Scores')
+    plt.legend()
+    plt.title('Precision & Recall Curves')
+    plt.show()
+
+
+    plt.plot(p_curve[:-1],r_curve[:-1], label='Precision-Recall Curve')
+    plt.xlabel('Precision')
+    plt.ylabel('Recall')
+    plt.legend()
+    plt.title('Precision-Recall Curve')
+    plt.show()
+
+
+    f1 = []
+    thresholds = np.linspace(0, 1, 101)
+
+    for thresh in thresholds:
+        y_pred =(y_probs > thresh)
+        f1.append(f1_score(y_true, y_pred))
+        
+    sns.lineplot(x=thresholds, y=f1)
+    plt.xlabel('Prediction Threshold')
+    plt.ylabel('F1 Score')
+    plt.title('F1 Score vs. Prediction Threshold')
+    plt.show()
+
+    thresh = thresholds[f1.index(max(f1))]
+
+    return thresh
