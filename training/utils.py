@@ -23,8 +23,7 @@ def load_and_prepare_data(df, target="diagnosed_diabetes"):
 
     return X_train_std, X_test_std, y_train, y_test
 
-def load_and_prepare_data_2(df, target="diagnosed_diabetes"):
-    chosen_columns = ['family_history_diabetes', 'hypertension_history',
+chosen_columns = ['family_history_diabetes', 'hypertension_history',
        'cardiovascular_history', 'waist_to_hip_ratio', 'age_30-39', 'age_40-49', 'age_50-59', 'age_60-69', 'age_70-79',
        'age_80+', 'gender_Male', 'gender_Other', 'ethnicity_Black',
        'ethnicity_Hispanic', 'ethnicity_Other', 'ethnicity_White',
@@ -44,9 +43,12 @@ def load_and_prepare_data_2(df, target="diagnosed_diabetes"):
        'sleep_hours_per_day_Normal', 'sleep_hours_per_day_Long',
        'screen_time_hours_per_day_Moderate', 'screen_time_hours_per_day_High',
        'screen_time_hours_per_day_Very_High', 'bmi_Normal', 'bmi_Overweight',
-       'bmi_Obese_I', 'bmi_Obese_II', target]
+       'bmi_Obese_I', 'bmi_Obese_II']
 
-    X = df[chosen_columns].drop(columns=[target])
+def load_and_prepare_data_2(df, target="diagnosed_diabetes"):
+    chosen_columns_with_target = chosen_columns + [target]
+
+    X = df[chosen_columns_with_target].drop(columns=[target])
     y = df[target]
 
     X_train, X_test, y_train, y_test = train_test_split(
