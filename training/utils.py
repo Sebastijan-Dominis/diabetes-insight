@@ -86,6 +86,34 @@ def evaluate_metrics(actual, predicted, title=None):
     print(f"Precision: {precision_score(actual, predicted)}")
     print(f"Recall: {recall_score(actual, predicted)}")
     print(f"F1 Score: {f1_score(actual, predicted)}")
+
+def evaluate_metrics_2(actual, predicted, title=None):
+    if title:
+        print(title)
+
+    matrix = confusion_matrix(actual, predicted)
+    ax = sns.heatmap(
+        matrix,
+        annot=True,
+        cmap="Blues",
+        fmt="g"
+    )
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+    ax.set_yticklabels(labels=["Low Risk", "Medium Risk", "High Risk"])
+    ax.set_xticklabels(labels=["Low Risk", "Medium Risk", "High Risk"])
+    ax.set_title("Diabetes Risk - Confusion Matrix")
+    plt.show();
+
+    acc = accuracy_score(actual, predicted)
+    prec = precision_score(actual, predicted, average='weighted')
+    rec = recall_score(actual, predicted, average='weighted')
+    f1 = f1_score(actual, predicted, average='weighted')
+
+    print(f"Accuracy:  {acc:.4f}")
+    print(f"Precision: {prec:.4f}")
+    print(f"Recall:    {rec:.4f}")
+    print(f"F1 Score:  {f1:.4f}")
     
 def plot_roc_curve(y_true, y_probs, model_name='Model'):
     fpr, tpr, thresholds = roc_curve(y_true, y_probs)
