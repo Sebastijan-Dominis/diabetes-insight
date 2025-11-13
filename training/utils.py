@@ -6,9 +6,48 @@ from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, r
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-def load_and_prepare_data(df):
-    X = df.drop(columns=["diagnosed_diabetes"])
-    y = df["diagnosed_diabetes"]
+def load_and_prepare_data(df, target="diagnosed_diabetes"):
+    X = df.drop(columns=[target])
+    y = df[target]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y,
+        test_size=0.2,
+        random_state=42, 
+        shuffle=True
+    )
+    
+    scaler = StandardScaler()
+    X_train_std = scaler.fit_transform(X_train)
+    X_test_std = scaler.transform(X_test)
+
+    return X_train_std, X_test_std, y_train, y_test
+
+def load_and_prepare_data_2(df, target="diagnosed_diabetes"):
+    chosen_columns = ['family_history_diabetes', 'hypertension_history',
+       'cardiovascular_history', 'waist_to_hip_ratio', 'age_30-39', 'age_40-49', 'age_50-59', 'age_60-69', 'age_70-79',
+       'age_80+', 'gender_Male', 'gender_Other', 'ethnicity_Black',
+       'ethnicity_Hispanic', 'ethnicity_Other', 'ethnicity_White',
+       'education_level_Highschool', 'education_level_No formal',
+       'education_level_Postgraduate', 'income_level_Low',
+       'income_level_Lower-Middle', 'income_level_Middle',
+       'income_level_Upper-Middle', 'employment_status_Retired',
+       'employment_status_Student', 'employment_status_Unemployed',
+       'smoking_status_Former', 'smoking_status_Never',
+       'alcohol_consumption_per_week_Light',
+       'alcohol_consumption_per_week_Moderate',
+       'alcohol_consumption_per_week_Heavy',
+       'physical_activity_minutes_per_week_Light',
+       'physical_activity_minutes_per_week_Moderate',
+       'physical_activity_minutes_per_week_Active',
+       'physical_activity_minutes_per_week_Very Active','sleep_hours_per_day_Short',
+       'sleep_hours_per_day_Normal', 'sleep_hours_per_day_Long',
+       'screen_time_hours_per_day_Moderate', 'screen_time_hours_per_day_High',
+       'screen_time_hours_per_day_Very_High', 'bmi_Normal', 'bmi_Overweight',
+       'bmi_Obese_I', 'bmi_Obese_II', target]
+
+    X = df[chosen_columns].drop(columns=[target])
+    y = df[target]
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y,
