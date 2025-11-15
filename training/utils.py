@@ -45,7 +45,7 @@ chosen_columns = ['family_history_diabetes', 'hypertension_history',
        'screen_time_hours_per_day_Very_High', 'bmi_Normal', 'bmi_Overweight',
        'bmi_Obese_I', 'bmi_Obese_II']
 
-def load_and_prepare_data_2(df, target="diagnosed_diabetes"):
+def load_and_prepare_data_2(df, target="diabetes_risk_score"):
     chosen_columns_with_target = chosen_columns + [target]
 
     X = df[chosen_columns_with_target].drop(columns=[target])
