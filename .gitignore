@@ -1,0 +1,58 @@
+# Environments
+.env
+.venv/
+venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# --------------------------------------
+# FastAPI / Web
+# --------------------------------------
+# Uvicorn reload cache
+.reload/
+
+# Static / generated files (if applicable)
+staticfiles/
+media/
+uploaded_files/
+
+# --------------------------------------
+# Dash
+# --------------------------------------
+# Dash auto-generated metadata
+*.map
+*.cache/
+
+# --------------------------------------
+# Machine Learning artifacts
+# --------------------------------------
+models/
+checkpoints/
+*.h5
+*.pt
+*.onnx
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# --------------------------------------
+# OS / Editor junk
+# --------------------------------------
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
