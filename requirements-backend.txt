@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pandas
+weasyprint
+reportlab
+bs4
+markdown
+openai
+slowapi
+dotenv
+joblib
+shap
+catboost
